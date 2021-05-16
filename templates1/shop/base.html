@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <!-- Meta Tag -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=1024">
+    <!-- Title Tag  -->
+    <title>Eshop - eCommerce HTML5 Template.</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fimages%2Ffavicon.png?alt=media&token=5e11425f-f727-4122-94e3-109f38877dfd">
+    <!-- Web Font -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+        rel="stylesheet">
+
+    <!-- StyleSheet -->
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fmagnific-popup.min.css?alt=media&token=eaa451a6-51b5-40b4-8bcb-90a96ef7029c">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fniceselect.css?alt=media&token=8bb57521-bfce-4162-a4ef-ce808cf2decf">
+    <!-- Animate CSS -->
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fanimate.css?alt=media&token=396f1647-ab79-499d-981e-ec2ecdb86515">
+    <!-- Flex Slider CSS -->
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fflex-slider.min.css?alt=media&token=93d7b096-cea8-4359-b2ce-481c59cad5d4">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fowl-carousel.css?alt=media&token=11facc8f-2497-42cb-9968-1484aa4b4f30">
+    <!-- Slicknav -->
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fslicknav.min.css?alt=media&token=404478b1-3274-47d0-96f7-5cee87897634">
+
+    <!-- Eshop StyleSheet -->
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Freset.css?alt=media&token=8c9d9941-8f58-4c52-afcd-4676cd167929">
+    <link rel="stylesheet" href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fstyle.css?alt=media&token=0f8528d2-721a-46a5-b814-06af06d8bcb1">
+    <link rel="stylesheet"
+        href="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fcss%2Fresponsive.css?alt=media&token=30454b85-ad17-4f3b-aff8-8180be613950">
+<style>
+    ::-webkit-scrollbar{
+        display:none;
+    }
+    #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+      }
+      
+      #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+      
+      @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;} 
+        to {bottom: 30px; opacity: 1;}
+      }
+      
+      @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+      }
+      
+      @-webkit-keyframes fadeout {
+        from {bottom: 30px; opacity: 1;} 
+        to {bottom: 0; opacity: 0;}
+      }
+      
+      @keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+      }
+      
+</style>
+<script>
+    var user = '{{request.user}}';
+    function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getToken('csrftoken');
+</script>
+
+{%block css%}{%endblock%}
+</head>
+
+<body class="js">
+    <!-- Header -->
+    <header class="header shop">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-12">
+                        <!-- Top Left -->
+                        <div class="top-left">
+                            <ul class="list-main">
+                                <li><i class="fa fa-headphones"></i> +060 (800) 801-582</li>
+                                <li><i class="fa fa-inbox"></i> support@shophub.com</li>
+                            </ul>
+                        </div>
+                        <!--/ End Top Left -->
+                    </div>
+                    <div class="col-lg-8 col-md-12 col-12">
+                        <!-- Top Right -->
+                        <div class="right-content">
+                            <ul class="list-main">
+                               
+
+                                {%if request.user.is_authenticated%}
+                                <li><i class="fa fa-user"></i> <a href="#">My account</a></li>
+                                <li><a href="/auth/logout"><i class="fa fa-power-off"></i>Logout</a></li>
+                                {%else%}
+                                
+                                <li><a href="/auth/login"><i class="fa fa-power-off"></i>Login</a></li>
+                                {%endif%}
+                            </ul>
+                        </div>
+                        <!-- End Top Right -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Topbar -->
+        <div class="middle-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-12">
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a href="/"><img
+                                    src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fimages%2Flogo.png?alt=media&token=f62809d3-4ec1-4e5f-a339-df39bbe742a8"
+                                    alt="logo"></a>
+                        </div>
+                        <!--/ End Logo -->
+                        
+                        <div class="mobile-nav"></div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-12">
+                        <div class="search-bar-top">
+                            <div class="search-bar">
+                                
+                               
+                                <form action="/search/product/" method="POST">
+                                    
+                                    <select>
+                                        <option value="all" selected="selected">All Category</option>
+                                        {%for category in categories%}
+                                        <option value="{{category.name}}">{{category.name}}</option>
+                                        {%endfor%}
+                                        
+                                    </select>
+                                    <input name="search" placeholder="Search Products Here....." type="search">
+                                    <button class="btnn" type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-12">
+                        <div class="right-bar">
+                            <!-- Search Form -->
+                            <div class="sinlge-bar">
+                                <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="sinlge-bar">
+                                <a href="#" class="single-icon"><i class="fa fa-user-circle-o"
+                                        aria-hidden="true"></i></a>
+                            </div>
+                            <div class="sinlge-bar shopping">
+                                <a href="#" class="single-icon"><i class="fa fa-shopping-cart"></i> <span
+                                        class="total-count" id="cartCountPopover">{{cartCount}}</span></a>
+                                <!-- Shopping Item -->
+                                <div class="shopping-item">
+                                    <div class="dropdown-cart-header">
+                                        <span><span id="cartCountIn">{{cartCount}}</span> Items</span>
+                                        <a href="/cart/">View Cart</a>
+                                    </div>
+                                    <ul class="shopping-list">
+                                        {%for list in cartList%}
+                                        <li>
+                                            <a href="#" class="remove" title="Remove this item"><i
+                                                    class="fa fa-remove"></i></a>
+                                            <a class="cart-img" href="#"><img src="{{list.product.image}}"
+                                                    alt="#"></a>
+                                            <h4><a href="#">{{list.product.name}}</a></h4>
+                                            <p class="quantity">{{list.quantity}}x - <span class="amount">&#8377;{{list.amt}}</span></p>
+                                        </li>
+                                        {%endfor%}
+                                        
+                                    </ul>
+                                    <div class="bottom">
+                                        <div class="total">
+                                            <span>Total</span>
+                                            <span class="total-amount">&#8377;{{cartTotal}}</span>
+                                        </div>
+                                        <a href="/checkout/" class="btn animate">Checkout</a>
+                                    </div>
+                                </div>
+                                <!--/ End Shopping Item -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header Inner -->
+        <div class="header-inner">
+            <div class="container">
+                <div class="cat-nav-head">
+                    <div class="row">
+                        {%block category%}{%endblock%}
+                            <div class="menu-area">
+                                <!-- Main Menu -->
+                                <nav class="navbar navbar-expand-lg">
+                                    <div class="navbar-collapse">
+                                        <div class="nav-inner">
+                                            <ul class="nav main-menu menu navbar-nav">
+                                                <li class="active"><a href="/">Home</a></li>
+                                                
+                                                <li><a href="#"><small>Hello {{request.user.name}}!</small>
+                                                    Account<i class="fa fa-angle-down"></i></a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="/auth/account/">My Account</a></li>
+                                                        <li><a href="/wishlist/">My Wishlist</a></li>
+                                                        <li><a href="/auth/address/">Addresses</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="/cart/">My Cart</a>
+                                                    
+                                                </li>
+                                                
+                                                
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
+                                <!--/ End Main Menu -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Header Inner -->
+    </header>
+    <!--/ End Header -->
+
+    {%block body%}
+    {%endblock%}
+
+<!-- Start Shop Services Area -->
+<section class="shop-services section home">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-12">
+          <!-- Start Single Service -->
+          <div class="single-service">
+            <i class="fa fa-rocket"></i>
+            <h4>Free shiping</h4>
+            <p>Orders over &#8377;100</p>
+          </div>
+          <!-- End Single Service -->
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <!-- Start Single Service -->
+          <div class="single-service">
+            <i class="fa fa-undo"></i>
+            <h4>Free Return</h4>
+            <p>Within 30 days returns</p>
+          </div>
+          <!-- End Single Service -->
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <!-- Start Single Service -->
+          <div class="single-service">
+            <i class="fa fa-lock"></i>
+            <h4>Secure Payment</h4>
+            <p>100% secure payment</p>
+          </div>
+          <!-- End Single Service -->
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <!-- Start Single Service -->
+          <div class="single-service">
+            <i class="fa fa-tag"></i>
+            <h4>Best Price</h4>
+            <p>Guaranteed price</p>
+          </div>
+          <!-- End Single Service -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Shop Services Area -->
+  <div id="snackbar"></div>
+    <!-- Start Footer Area -->
+    <footer class="footer">
+        <!-- Footer Top -->
+        <div class="footer-top section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer about">
+                            <div class="logo">
+                                <a href="/"><img
+                                        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fimages%2Flogo2.png?alt=media&token=a0403ef5-c4be-48cc-8081-f0ab991acb20"
+                                        alt="#"></a>
+                            </div>
+                            <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, magna
+                                eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
+                                facilisis luctus, metus.</p>
+                            <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456
+                                        789</a></span></p>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer links">
+                            <h4>Information</h4>
+                            <ul>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Faq</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer links">
+                            <h4>Customer Service</h4>
+                            <ul>
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back</a></li>
+                                <li><a href="#">Returns</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer social">
+                            <h4>Get In Touch</h4>
+                            <!-- Single Widget -->
+                            <div class="contact">
+                                <ul>
+                                    <li>NO. 342 - London Oxford Street.</li>
+                                    <li>012 United Kingdom.</li>
+                                    <li>info@eshop.com</li>
+                                    <li>+032 3456 7890</li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-flickr"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Top -->
+        <div class="copyright">
+            <div class="container">
+                <div class="inner">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <div class="left">
+                                <p>Copyright © 2021 <a href="/"
+                                        target="_blank">Shppingly</a> - All Rights Reserved.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="right">
+                                <img src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fimages%2Fpayments.png?alt=media&token=9764de6e-8569-43d9-895c-954c219b21dc"
+                                    alt="#">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- /End Footer Area -->
+    {%block js%}{%endblock%}
+    {%if messages%}
+        {%for msg in messages%}
+    <script>
+        
+          var x = document.getElementById("snackbar");
+          snackbar.innerHTML="{{msg}}";
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+         
+        </script>
+        {%endfor%}
+        {%endif%}
+    <!-- Jquery -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fjquery.min.js?alt=media&token=246cdfd4-6b6d-4370-964d-36c691a1a123"></script>
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fjquery-migrate-3.0.0.js?alt=media&token=44bca7e7-9730-40cb-a604-aac8b95b84d8"></script>
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fjquery-ui.min.js?alt=media&token=9966970b-5c19-4db5-8d64-09ad2a93ae7b"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+    <!-- Slicknav JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fslicknav.min.js?alt=media&token=f4916e30-ef2f-4461-82ba-58e14dc92391"></script>
+    <!-- Owl Carousel JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fowl-carousel.js?alt=media&token=3a66157c-5128-4c79-8c9e-dd0ac5007cf5"></script>
+    <!-- Magnific Popup JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fmagnific-popup.js?alt=media&token=c703e7e3-641b-4e35-9b3e-7325aae6b5f7"></script>
+    <!-- Waypoints JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fwaypoints.min.js?alt=media&token=5a77824e-c135-48ab-bf82-37e9a8f014d3"></script>
+    <!-- Countdown JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Ffinalcountdown.min.js?alt=media&token=ff134c0b-935c-4a13-89ae-598d9f26578d"></script>
+    <!-- Nice Select JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fnicesellect.js?alt=media&token=7c6b7e28-c2d0-445e-a8a6-95f58ed3b32f"></script>
+    <!-- Flex Slider JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fflex-slider.js?alt=media&token=a58308ef-2c10-4076-93fa-fd50a28df51a"></script>
+    <!-- ScrollUp JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fscrollup.js?alt=media&token=50b67b77-7101-4755-879f-d20a8317e5ae"></script>
+    <!-- Onepage Nav JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Fonepage-nav.min.js?alt=media&token=d0ce9934-5dd2-4a04-9b02-e23bd1964fd1"></script>
+    <!-- Easing JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Feasing.js?alt=media&token=833e837f-4f69-4898-a6f9-379305b31552"></script>
+    <!-- Active JS -->
+    <script
+        src="https://firebasestorage.googleapis.com/v0/b/shoppingly-1e8fd.appspot.com/o/assets%2Fjs%2Factive.js?alt=media&token=34622ea7-5b20-4697-a1b5-99b78d3ca03b"></script>
+
+
+
+
+        
+    </body>
+
+</html>

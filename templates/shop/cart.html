@@ -1,0 +1,125 @@
+{%extends 'base.html'%}
+{%block body%}
+
+<div class="container">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for item in items%}
+            <tr id="tr{{item.product.id}}">
+                <th scope="row">{{forloop.counter}}</th>
+                <td><img src="{{item.product.image}}" alt="" height="100px" width="100px"></td>
+                <td>{{item.product.name}}</td>
+                <td> Rs. &nbsp;<span id="price{{item.product.id}}" data-price="{{item.product.price}}">{{item.product.price}}</span></td>
+                <td>
+                    <div class="col">
+                        <button id="qtyMinus{{item.product.id}}" class="btn btn-outline-danger update-cart" data-product="{{item.product.id}}" data-action="remove">
+                        {%if item.quantity == 1 %} Delete {%else%}   - {%endif%}
+                        </button>
+                        &nbsp;
+                        <span id="qtySpan{{item.product.id}}">{{item.quantity}}</span>
+                        &nbsp;
+                        <button id="qtyPlus{{item.product.id}}" class="btn btn-outline-success update-cart" data-product="{{item.product.id}}" data-action="add">+</button>
+                    </div>
+                </td>
+                <td>Rs.&nbsp;<span id='totalprice{{item.product.id}}'>{{item.amt}}</span></td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <br>
+    <div>
+        <h4 style="float:right">Total Price: Rs. &nbsp;<span id="total" data-value="{{total}}">{{total}}</span></h4>
+    </div>
+    <br>
+    <br>
+    <div class="mb-4 row">
+        <a href="/shop/checkout" class="btn btn-dark col" type="button">
+            Checkout
+        </a>
+        
+    </div>
+</div>
+{%endblock%}
+{%block js%}
+
+<script>
+    var updateBtns = document.getElementsByClassName('update-cart')
+
+    for (var i = 0; i < updateBtns.length; i++) {
+        updateBtns[i].addEventListener('click', function () {
+            var productId = this.dataset.product;
+            var action = this.dataset.action;
+            console.log(productId, action);
+
+            if (user === 'AnonymousUser')
+                console.log('not logged in')
+            else
+                updateUserOrder(productId, action)
+        })
+    }
+
+    function updateUserOrder(productId, action) {
+        console.log('User logged in. Sending data..')
+
+        var url = 'update_item/'
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ 'productId': productId, 'action': action })
+        })
+
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                
+                var pid=data['productId'].toString();
+                var qty=data['quantity'];
+                console.log(pid, qty)
+                var qtyspan=document.getElementById('qtySpan'+pid);
+                qtyspan.innerHTML = qty;
+                var price=parseFloat(document.getElementById('price'+pid).dataset.price);
+                document.getElementById('totalprice'+pid).innerHTML=(price*qty);
+                if(action=="add"){
+                    
+                        var total=parseFloat(document.getElementById('total').dataset.value);
+                        total=total+price;
+                        document.getElementById('total').innerHTML=total;
+                        document.getElementById('total').dataset.value=total;
+                }
+                else{
+                    var total=parseFloat(document.getElementById('total').dataset.value);
+                    total=total-price;
+                    document.getElementById('total').innerHTML=total;
+                    document.getElementById('total').dataset.value=total;
+                }
+                
+                if(qty==1){
+                document.getElementById('qtyMinus'+pid).innerHTML="Delete";
+                }
+                else if(qty>1){
+                    document.getElementById('qtyMinus'+pid).innerHTML="-";
+                }
+                else{
+                    document.getElementById('tr'+pid).innerHTML="";
+                }
+            })
+    }
+</script>
+
+{%endblock%}

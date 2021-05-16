@@ -1,0 +1,43 @@
+{%extends 'seller/base.html'%}
+{%block products%}active{%endblock%}
+{%block sell_css%}
+<style>
+    
+</style>
+{%endblock%}
+{%block content%}
+
+<div class="col-md-8 m-4 carding">
+    <h4 class="text-center p-2">Recent Orders</h4>
+    
+    <table class="table">
+        <thead style="background-color:aliceblue;">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Id</th>
+            
+            <th scope="col">Price</th>
+            
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {%for item in items%}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><img src="{{item.product.image}}" alt="" height="100px" width="100px"></td>
+            <td>{{item.product.name}}</td>
+            <td>#{{item.product.id}}</td>
+           
+            <td>{{item.product.price}}</td>
+           
+            <td>{{item.order.available}}</td>
+          </tr>
+         {%endfor%}
+        </tbody>
+      </table>
+</div>
+
+{%endblock%}

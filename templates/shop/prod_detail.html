@@ -1,0 +1,120 @@
+{%extends 'base.html'%}
+
+{%block body%}
+
+<div class="m-4">
+    <div class="row">
+        <div class="col-6" style="border:1px solid black">
+            <div class="row p-2">
+                <div class="col-3 p-2" style="border:1px solid black">
+                    imagesets
+                </div>
+                <div class="col-8" style="margin-left: auto; margin-right: auto;">
+                    <img src="{{product.image}}" style="width: 100%;height: 300px;object-fit: cover;object-position: bottom;">
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div>
+                <h2>{{product.name}}</h2>
+                <h4>Rs.&nbsp;<small><strike style="color:grey;">{{product.mrp}}</strike></small>&nbsp;{{product.price}}</h4>
+                <div class="row">
+                    <div id="qtyDiv{{product.id}}" class="col">
+                        {%if cartItems %}
+                        {%for cartItem in cartItems%}
+                        <div class="col">
+                            <button id="qtyMinus" class="btn btn-outline-danger update-cart"
+                                data-product="{{product.id}}" data-action="remove">
+                                {%if cartItem.quantity == 1%}Delete{%else%}-{%endif%}
+                            </button>&nbsp;
+                            <span id="qtySpan">
+                                {{cartItem.quantity}}
+                            </span>&nbsp;
+                            <button id="qtyPlus" class="btn btn-outline-success update-cart"
+                                data-product="{{product.id}}" data-action="add">
+                                +
+                            </button>
+                        </div>
+                        {%endfor%}
+                        {%else%}
+                        <button class="btn btn-outline-success update-cart" data-product="{{product.id}}"
+                            data-action="add">
+                            Add to Cart
+                        </button>
+                        {%endif%}
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-info">Add to Wishlist</button>
+                    </div>
+                </div>
+                <br>
+                <p>{{product.desc}}</p>
+                <p>Sold by &nbsp;{{product.seller.business_name}}&nbsp;and fulfilled by Shoppingly </p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block js%}
+<script>
+    update()
+    function update() {
+        var updateBtns = document.getElementsByClassName('update-cart')
+
+        for (var i = 0; i < updateBtns.length; i++) {
+
+            updateBtns[i].addEventListener('click', function () {
+                var productId = this.dataset.product;
+                var action = this.dataset.action;
+
+
+                if (user === 'AnonymousUser')
+                    location.href = '/login'
+                else {
+                    updateUserOrder(productId, action);
+                    i--;
+                }
+            })
+        }
+    }
+    function updateUserOrder(productId, action) {
+        console.log('User logged in. Sending data..')
+
+        var url = 'http://127.0.0.1:8000/shop/update_item/'
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ 'productId': productId, 'action': action })
+        })
+
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+
+                var pid = data['productId'].toString();
+                var qty = data['quantity'];
+                console.log(pid, qty)
+                var qtydiv = document.getElementById('qtyDiv' + pid);
+
+                var change = '<button id="qtyMinus" class="btn btn-outline-danger update-cart" data-product="{{product.id}}" data-action="remove">Delete</button>&nbsp;<span id="qtySpan">' + qty + '</span>&nbsp;<button id="qtyPlus" class="btn btn-outline-success update-cart"  data-product="{{product.id}}" data-action="add">+</button>'
+
+                if (qty == 1) {
+                    qtydiv.innerHTML = change;
+                }
+                else if (qty > 1) {
+                    document.getElementById('qtySpan').innerHTML = qty;
+                    document.getElementById('qtyMinus').innerHTML = "-";
+                }
+                else {
+                    qtydiv.innerHTML = '<button class="btn btn-outline-success update-cart" data-product="{{product.id}}" data-action="add">Add to Cart</button>'
+                }
+                update();
+            })
+    }
+</script>
+{%endblock%}
